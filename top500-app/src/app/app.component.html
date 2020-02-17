@@ -1,0 +1,43 @@
+<header>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <img class="example-icon" src="assets/logos/Top500_logo.png">
+      <span>Supercomputadoras</span>
+      <span class="example-spacer"></span>
+
+      <a class="example-padding" mat-stroked-button href="https://www.top500.org/" target="_blank">Top500</a>
+
+      <a class="example-padding" mat-stroked-button href="https://www.top500.org/" target="_blank">
+        <img src="assets/logos/github-circle-white-transparent.svg" alt="angular" class="docs-angular-logo"></a>
+
+    </mat-toolbar-row>
+
+  </mat-toolbar>
+</header>
+
+
+<div class="md-padding" flex="noshrink">
+
+
+
+
+  <google-chart [width]="900" [height]="500" [title]="chart.title" [type]="chart.type" [data]="chart.data"
+    [columnNames]="chart.columnNames" [options]="chart.options">
+  </google-chart>
+
+  <google-chart [title]="chart.title" [type]="chart.type" [data]="chart.data" [columnNames]="chart.columnNames"
+    [options]="chart.options">
+  </google-chart>
+
+  <google-chart [width]="900" [height]="400"[title]="lineChart.title" [type]="lineChart.type"
+    [data]="data2" [columnNames]="lineChart.columnNames" [options]="lineChart.options">
+  </google-chart>
+
+  <button mat-raised-button (click)="clickEvent()" color="primary">Botòn</button>
+
+</div>
+
+<footer class="docs-footer">
+  <span class="example-spacer"></span>
+  <span class="example-padding">CUCEA MTI 2020</span>
+</footer>

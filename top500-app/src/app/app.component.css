@@ -1,0 +1,25 @@
+.example-icon {
+    padding: 0 14px;
+    height: 32px;
+    margin-right: 16px;
+  }
+
+  .example-padding {
+    padding: 0 14px;
+    margin-left: 10px;
+  }
+  
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+
+
+
+  .docs-footer {
+    padding: 12px;
+    font-size: 12px;
+    margin-top: 40px;
+    
+    background: #3f51b5;
+    color: #fff;
+  }
