@@ -15,29 +15,62 @@
   </mat-toolbar>
 </header>
 
+<div class="app-body">
 
-<div class="md-padding" flex="noshrink">
+  <div class="app-content" flex="noshrink">
+
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Shiba Inu</mat-card-title>
+        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content class="div-center">
+
+        <google-chart [width]="800" [height]="600" [title]="chart.title" [type]="chart.type" [data]="chart.data"
+          [columnNames]="chart.columnNames" [options]="chart.options">
+        </google-chart>
+
+
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>LIKE</button>
+        <button mat-button>SHARE</button>
+      </mat-card-actions>
+    </mat-card>
+
+
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Shiba Inu</mat-card-title>
+        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content class="div-center">
+
+        <google-chart [width]="800" [height]="600" [title]="lineChart.title" [type]="lineChart.type" [data]="data2"
+          [columnNames]="lineChart.columnNames" [options]="lineChart.options">
+        </google-chart>
+
+        
+
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>LIKE</button>
+        <button mat-raised-button (click)="clickEvent()" color="primary">Botòn</button>
+      </mat-card-actions>
+    </mat-card>
 
 
 
 
-  <google-chart [width]="900" [height]="500" [title]="chart.title" [type]="chart.type" [data]="chart.data"
-    [columnNames]="chart.columnNames" [options]="chart.options">
-  </google-chart>
+  </div>
 
-  <google-chart [title]="chart.title" [type]="chart.type" [data]="chart.data" [columnNames]="chart.columnNames"
-    [options]="chart.options">
-  </google-chart>
-
-  <google-chart [width]="900" [height]="400"[title]="lineChart.title" [type]="lineChart.type"
-    [data]="data2" [columnNames]="lineChart.columnNames" [options]="lineChart.options">
-  </google-chart>
-
-  <button mat-raised-button (click)="clickEvent()" color="primary">Botòn</button>
+  <footer class="docs-footer">
+    <span class="example-spacer"></span>
+    <span class="example-padding">CUCEA MTI 2020</span>
+  </footer>
 
 </div>
-
-<footer class="docs-footer">
-  <span class="example-spacer"></span>
-  <span class="example-padding">CUCEA MTI 2020</span>
-</footer>

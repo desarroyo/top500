@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,7 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  @ViewChild('divToMeasure') divToMeasureElement: ElementRef;
+
   title = 'top500-app';
+  chartwidth = 300
+
 
   ej_valor: number = 5;
   title2 = "2000"
@@ -56,6 +61,10 @@ export class AppComponent {
 
   clickEvent() {
 
+    // this.chartwidth = 700;
+    // this.chart.options.width = this.chartwidth;
+    // console.log(this.chart.options.width);
+
     (async () => {
       // Do something before delay
       console.log('before delay')
@@ -68,7 +77,7 @@ export class AppComponent {
         console.log('after delay')
         this.ej_valor += 2;
         console.log(this.ej_valor);
-        this.lineChart.options.chart.title = "Año: "+ (2000+ i);
+        this.lineChart.options.chart.title = "Año: " + (2000 + i);
 
         this.data2 = [
           ['Firefox', 0, 7],

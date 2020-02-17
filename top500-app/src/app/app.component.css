@@ -13,12 +13,34 @@
     flex: 1 1 auto;
   }
 
+  .example-card {
+    /* max-width: 400px; */
+    margin: 20px;
+  }
+
+  .div-center{
+    display: flex;
+    justify-content: center;
+  }
+  
+
+  .app-body {
+    background-color: #ebebeb;
+  }
+
+  .app-content {
+    padding: 15px;
+    height: max-content;
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
 
 
   .docs-footer {
     padding: 12px;
     font-size: 12px;
-    margin-top: 40px;
     
     background: #3f51b5;
     color: #fff;
