@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "top500-app"
+  "defaultProject": "top500-app",
+  "cli": {
+    "analytics": "264c619c-3816-4b20-873f-0c1b9473d6b1"
+  }
 }

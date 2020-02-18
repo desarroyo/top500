@@ -2,12 +2,13 @@
   <mat-toolbar color="primary">
     <mat-toolbar-row>
       <img class="example-icon" src="assets/logos/Top500_logo.png">
-      <span>Supercomputadoras</span>
+      <span *ngIf="innerWidth > 450px">Supercomputadoras</span>
+      <span *ngIf="innerWidth <= 450px">Top500</span>
       <span class="example-spacer"></span>
 
-      <a class="example-padding" mat-stroked-button href="https://www.top500.org/" target="_blank">Top500</a>
+      <a *ngIf="innerWidth > 450px" class="example-padding" mat-stroked-button href="https://www.top500.org/" target="_blank">Top500</a>
 
-      <a class="example-padding" mat-stroked-button href="https://www.top500.org/" target="_blank">
+      <a class="example-padding" mat-stroked-button href="https://github.com/desarroyo/top500" target="_blank">
         <img src="assets/logos/github-circle-white-transparent.svg" alt="angular" class="docs-angular-logo"></a>
 
     </mat-toolbar-row>
@@ -28,15 +29,16 @@
 
       <mat-card-content class="div-center">
 
-        <google-chart [width]="800" [height]="600" [title]="chart.title" [type]="chart.type" [data]="chart.data"
+        <google-chart class="chart" [title]="chart.title" [type]="chart.type" [data]="chart.data"
           [columnNames]="chart.columnNames" [options]="chart.options">
         </google-chart>
+        
 
 
       </mat-card-content>
       <mat-card-actions>
         <button mat-button>LIKE</button>
-        <button mat-button>SHARE</button>
+        <button mat-button (click)="clickEvent()" >SHARE</button>
       </mat-card-actions>
     </mat-card>
 
@@ -50,7 +52,7 @@
 
       <mat-card-content class="div-center">
 
-        <google-chart [width]="800" [height]="600" [title]="lineChart.title" [type]="lineChart.type" [data]="data2"
+        <google-chart class="chart" [title]="lineChart.title" [type]="lineChart.type" [data]="data2"
           [columnNames]="lineChart.columnNames" [options]="lineChart.options">
         </google-chart>
 

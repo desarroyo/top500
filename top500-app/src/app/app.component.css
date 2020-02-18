@@ -18,18 +18,20 @@
     margin: 20px;
   }
 
+  .chart {
+    width: 100%; 
+    min-height: 450px;
+  }
+
   .div-center{
     display: flex;
     justify-content: center;
   }
   
 
-  .app-body {
-    background-color: #ebebeb;
-  }
 
   .app-content {
-    padding: 15px;
+    /* padding: 15px; */
     height: max-content;
     max-width: 960px;
     width: 100%;

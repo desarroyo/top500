@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -39,6 +39,11 @@ export class AppComponent {
     columnNames: ['Browser', 'Percentage'],
     options: {
       is3D: true,
+      animation: {
+        duration: 300,
+        easing: 'out',
+        startup: true
+      }
     }
   }
 
@@ -50,14 +55,27 @@ export class AppComponent {
     options: {
       chart: {
         title: this.title2,
-        subtitle: 'in millions of dollars (USD)'
+        subtitle: 'in millions of dollars (USD)',
+        animation: {
+          duration: 1000,
+          easing: 'out',
+        },
       },
       curveType: 'function',
       legend: { position: 'bottom' },
 
     }
   }
+  innerWidth: number;
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+  }
+
+  ngOnInit() {
+    this.innerWidth = window.innerWidth;
+  }
 
   clickEvent() {
 
@@ -88,6 +106,16 @@ export class AppComponent {
           ['Others', 0.7, -3]
         ];
 
+
+        this.chart.data = [
+          ['Firefox', 15.0],
+          ['IE', 22.8],
+          ['Chrome', 10.8],
+          ['Safari', 1.5],
+          ['Opera', 3.2],
+          ['Others', 5.7]
+        ]
+
       }
 
 
@@ -96,8 +124,6 @@ export class AppComponent {
 
 
   }
-
-
   delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
