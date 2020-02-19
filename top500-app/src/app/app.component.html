@@ -20,17 +20,16 @@
 
   <div class="app-content" flex="noshrink">
 
-    <mat-card class="example-card">
+    <mat-card *ngIf="chart1" class="example-card">
       <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>{{title_pie}}</mat-card-title>
+        <mat-card-title>Mejor Posicionados</mat-card-title>
         <mat-card-subtitle>Top 500</mat-card-subtitle>
       </mat-card-header>
 
       <mat-card-content class="div-center">
 
-        <google-chart class="chart" [title]="chart.title" [type]="chart.type" [data]="chart.data"
-          [columnNames]="chart.columnNames" [options]="chart.options">
+        <google-chart  class="chart" [title]="chart1.title" [type]="chart1.type" [data]="chart1.data"
+          [columnNames]="chart1.columnNames" [options]="chart1.options">
         </google-chart>
         
 
@@ -43,17 +42,16 @@
     </mat-card>
 
 
-    <mat-card class="example-card">
+    <mat-card *ngIf="lineChart1" class="example-card">
       <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>Shiba Inu</mat-card-title>
-        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+        <mat-card-title>Mayor Crecimiento</mat-card-title>
+        <mat-card-subtitle>Top500</mat-card-subtitle>
       </mat-card-header>
 
       <mat-card-content class="div-center">
 
-        <google-chart class="chart" [title]="lineChart.title" [type]="lineChart.type" [data]="lineChart.data"
-          [columnNames]="lineChart.columnNames" [options]="lineChart.options">
+        <google-chart class="chart" [title]="lineChart1.title" [type]="lineChart1.type" [data]="lineChart1.data"
+          [columnNames]="lineChart1.columnNames" [options]="lineChart1.options">
         </google-chart>
 
         
