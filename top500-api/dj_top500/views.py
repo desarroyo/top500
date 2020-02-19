@@ -36,6 +36,20 @@ FROM
             years.rank_year ASC)co
 '''
 
+_WHERE_TOP_10 = '''
+
+   WHERE countries.country IN (
+  
+       select country
+        from rankings 
+        where rank_year = (select max(rank_year) from rankings) 
+        group by country
+        order by min(ranking) limit 10
+   
+   )
+
+'''
+
 def top500_totales_list(request):
     
     df = pd.read_sql_query(_QUERY, connection)
@@ -52,7 +66,7 @@ def top500_totales_list(request):
 
 def top500_crecimientos_list(request):
     
-    df = pd.read_sql_query(_QUERY, connection)
+    df = pd.read_sql_query(_QUERY+_WHERE_TOP_10, connection)
 
     ds_cc = df
     ds_cc = ds_cc.set_index('year')
