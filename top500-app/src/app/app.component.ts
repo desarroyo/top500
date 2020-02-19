@@ -12,6 +12,11 @@ export class AppComponent {
   title = 'top500-app';
   chartwidth = 300
 
+  title_pie = '1995'
+
+
+  current_pie_data = [];
+
   json_crecimiento: any = {
     'columns': ['Australia',
       'Austria',
@@ -3271,7 +3276,14 @@ export class AppComponent {
 
     this.json_crecimiento.columns.unshift('Año');
 
-    console.log(this.json_crecimiento)
+    let y = 0;
+    for (let i = 0; i < this.json_data.columns.length; i++) {
+
+      this.current_pie_data.push([this.json_data.columns[i], this.json_data.data[y][i]]);
+    }
+
+
+    console.log(this.current_pie_data)
 
 
 
@@ -3282,6 +3294,7 @@ export class AppComponent {
     // this.chartwidth = 700;
     // this.chart.options.width = this.chartwidth;
     // console.log(this.chart.options.width);
+
 
     (async () => {
       // Do something before delay
@@ -3308,34 +3321,68 @@ export class AppComponent {
       }
 
 
-      // for (let i = 0; i < 3; i++) {
-      //   await this.delay(1000);
-      //   // Do something after
-      //   console.log('after delay')
-      //   this.ej_valor += 2;
-      //   console.log(this.ej_valor);
-      //   this.lineChart.options.chart.title = "Año: " + (2000 + i);
+      for (let y = 0; y < this.json_data.index.length; y++) {
 
-      //   this.data2 = [
-      //     ['Firefox', 0, 7],
-      //     ['IE', 26.8, this.ej_valor],
-      //     ['Chrome', -3, 7],
-      //     ['Safari', 8.5, -5],
-      //     ['Opera', 6.2, 7],
-      //     ['Others', 0.7, -3]
-      //   ];
+        this.title_pie = this.json_data.index[y];
+
+        this.current_pie_data = []
+
+        for (let i = 0; i < this.json_data.columns.length; i++) {
+
+          this.current_pie_data.push([this.json_data.columns[i], this.json_data.data[y][i]]);
+        }
+
+        var sorrtedArray: any = this.current_pie_data.sort((n1, n2) => {
+          if (n1[1] > n2[1]) {
+            return -1;
+          }
+
+          if (n1[1] < n2[1]) {
+            return 1;
+          }
+
+          return 0;
+        });
+
+        sorrtedArray = sorrtedArray.slice(0, 5);
+
+        console.log(sorrtedArray);
+
+        this.chart.data = sorrtedArray;
+        this.chart.columnNames = ['País', 'Total'];
+
+        await this.delay(1000);
+        // Do something after
 
 
-      //   this.chart.data = [
-      //     ['Firefox', 15.0],
-      //     ['IE', 22.8],
-      //     ['Chrome', 10.8],
-      //     ['Safari', 1.5],
-      //     ['Opera', 3.2],
-      //     ['Others', 5.7]
-      //   ]
 
-      // }
+
+
+        //   console.log('after delay')
+        //   this.ej_valor += 2;
+        //   console.log(this.ej_valor);
+        //   this.lineChart.options.chart.title = "Año: " + (2000 + i);
+
+        //   this.data2 = [
+        //     ['Firefox', 0, 7],
+        //     ['IE', 26.8, this.ej_valor],
+        //     ['Chrome', -3, 7],
+        //     ['Safari', 8.5, -5],
+        //     ['Opera', 6.2, 7],
+        //     ['Others', 0.7, -3]
+        //   ];
+
+
+        //   this.chart.data = [
+        //     ['Firefox', 15.0],
+        //     ['IE', 22.8],
+        //     ['Chrome', 10.8],
+        //     ['Safari', 1.5],
+        //     ['Opera', 3.2],
+        //     ['Others', 5.7]
+        //   ]
+
+      }
 
 
 
