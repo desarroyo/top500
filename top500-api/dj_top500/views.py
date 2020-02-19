@@ -30,6 +30,9 @@ FROM
    AND years.rank_year = top.rank_year -- WHERE rank_month = 11
  -- WHERE countries.country in ('Colombia')
 
+'''
+_QUERY_PART_3 = '''
+
    GROUP BY countries.country,
             years.rank_year
    ORDER BY countries.country,
@@ -52,7 +55,7 @@ _WHERE_TOP_10 = '''
 
 def top500_totales_list(request):
     
-    df = pd.read_sql_query(_QUERY, connection)
+    df = pd.read_sql_query(_QUERY+_QUERY_PART_3, connection)
 
     ds_cc = df
     ds_cc = ds_cc.set_index('year')
@@ -66,7 +69,7 @@ def top500_totales_list(request):
 
 def top500_crecimientos_list(request):
     
-    df = pd.read_sql_query(_QUERY+_WHERE_TOP_10, connection)
+    df = pd.read_sql_query(_QUERY+_WHERE_TOP_10+_QUERY_PART_3, connection)
 
     ds_cc = df
     ds_cc = ds_cc.set_index('year')
