@@ -6,7 +6,8 @@
       <span *ngIf="innerWidth <= 450px">Top500</span>
       <span class="example-spacer"></span>
 
-      <a *ngIf="innerWidth > 450px" class="example-padding" mat-stroked-button href="https://www.top500.org/" target="_blank">Top500</a>
+      <a *ngIf="innerWidth > 450px" class="example-padding" mat-stroked-button href="https://www.top500.org/"
+        target="_blank">Top500</a>
 
       <a class="example-padding" mat-stroked-button href="https://github.com/desarroyo/top500" target="_blank">
         <img src="assets/logos/github-circle-white-transparent.svg" alt="angular" class="docs-angular-logo"></a>
@@ -20,6 +21,20 @@
 
   <div class="app-content" flex="noshrink">
 
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Top500.org</mat-card-title>
+        <mat-card-subtitle>Supercomputadoras</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+
+        <p>El proyecto <b>Top500</b> es un ranking de las 500 <b>supercomputadoras</b> con mayor rendimiento del mundo.
+        </p>
+
+      </mat-card-content>
+    </mat-card>
+
     <mat-card *ngIf="chart1" class="example-card">
       <mat-card-header>
         <mat-card-title>Mejor Posicionados</mat-card-title>
@@ -28,16 +43,23 @@
 
       <mat-card-content class="div-center">
 
-        <google-chart  class="chart" [title]="chart1.title" [type]="chart1.type" [data]="chart1.data"
+        <google-chart class="chart" [title]="chart1.title" [type]="chart1.type" [data]="chart1.data"
           [columnNames]="chart1.columnNames" [options]="chart1.options">
         </google-chart>
-        
+
 
 
       </mat-card-content>
-      <mat-card-actions>
-        <button mat-button>LIKE</button>
-        <button mat-button (click)="clickEvent()" >SHARE</button>
+      <mat-card-actions style="margin: auto; width: fit-content;">
+        <button mat-raised-button color="primary" (click)="getTotalesChart(currentYear-1)">
+          <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+        <button mat-raised-button (click)="clickTotalesPlay()">
+          <mat-icon>play_arrow</mat-icon>
+        </button>
+        <button mat-raised-button color="primary" (click)="getTotalesChart(currentYear+1)">
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
       </mat-card-actions>
     </mat-card>
 
@@ -54,12 +76,21 @@
           [columnNames]="lineChart1.columnNames" [options]="lineChart1.options">
         </google-chart>
 
-        
+
 
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button>LIKE</button>
-        <button mat-raised-button (click)="clickEvent()" color="primary">Botòn</button>
+        <mat-form-field *ngIf="true" style="width: 100%;">
+          <mat-select [formControl]="bankCtrl" placeholder="País" (selectionChange)="selectCountry()" #singleSelect>
+            <mat-option>
+              <ngx-mat-select-search [formControl]="bankFilterCtrl" placeholderLabel="País..."></ngx-mat-select-search>
+            </mat-option>
+
+            <mat-option *ngFor="let bank of filteredBanks | async" [value]="bank">
+              {{bank.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </mat-card-actions>
     </mat-card>
 

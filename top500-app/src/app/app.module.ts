@@ -14,6 +14,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
 import { AppService } from './app.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+
+
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+
+
 
 
 @NgModule({
@@ -31,6 +41,14 @@ import { AppService } from './app.service';
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
+    MatDividerModule,
+    MatListModule,
+
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    NgxMatSelectSearchModule,
 
     HttpClientModule,
 

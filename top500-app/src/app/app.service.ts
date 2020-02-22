@@ -39,6 +39,14 @@ export class AppService {
             )
     }
 
+    getCrecimiento(country: String): Observable<any> {
+        return this.http.get<any>(this.baseurl + '/dj_top500/crecimiento/'+country)
+            .pipe(
+                retry(1),
+                catchError(this.errorHandl)
+            )
+    }
+
 
     // Error handling
     errorHandl(error) {

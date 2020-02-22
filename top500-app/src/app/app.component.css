@@ -1,3 +1,11 @@
+.example-header-image {
+  background-image: url('/assets/logos/Top500_logo.png');
+  background-size: cover;
+  border-radius: 0%;
+  width: 70px;
+}
+
+
 .example-icon {
     padding: 0 14px;
     height: 32px;
