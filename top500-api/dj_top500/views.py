@@ -53,6 +53,7 @@ _WHERE_TOP_10 = '''
 
 '''
 
+
 def top500_totales_list(request):
     
     df = pd.read_sql_query(_QUERY+_QUERY_PART_3, connection)
@@ -70,6 +71,22 @@ def top500_totales_list(request):
 def top500_crecimientos_list(request):
     
     df = pd.read_sql_query(_QUERY+_WHERE_TOP_10+_QUERY_PART_3, connection)
+
+    ds_cc = df
+    ds_cc = ds_cc.set_index('year')
+    # del ds_cc['crecimiento']
+
+    ds_cc = ds_cc.sort_index()
+    ds_cc = ds_cc.pivot(columns='country', values='total')
+
+    ds_cc = ds_cc.pct_change(axis='rows').replace([np.nan], 0).replace([np.inf, -np.inf], 1)
+
+    j = json.loads(ds_cc.to_json(orient='split'))
+    return JsonResponse(j) 
+
+def top500_crecimiento(request,pk):
+    
+    df = pd.read_sql_query(_QUERY+"WHERE countries.country = '"+pk+"' "+_QUERY_PART_3, connection)
 
     ds_cc = df
     ds_cc = ds_cc.set_index('year')
