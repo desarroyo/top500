@@ -7,6 +7,10 @@ import { ReplaySubject, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { BANKS, Bank } from './demo-data';
 import { MatSelect } from '@angular/material/select';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+
 
 
 
@@ -16,6 +20,9 @@ import { MatSelect } from '@angular/material/select';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  @BlockUI('block-top-50') blockContent: NgBlockUI;
+  @BlockUI('block-crecimiento') blockCrecimiento: NgBlockUI;
 
 
   /** list of banks */
@@ -48,7 +55,7 @@ export class AppComponent {
   currentYear: number;
 
 
-  constructor(public appService: AppService) { }
+  constructor(public appService: AppService, private _snackBar: MatSnackBar) { }
 
 
   @HostListener('window:resize', ['$event'])
@@ -160,55 +167,76 @@ export class AppComponent {
 
   getCrecimientos(country: String) {
 
-    if (country && country != 'Top 10') {
-      return this.appService.getCrecimiento(country).subscribe((data: {}) => {
-        this.data_crecimientos = data;
 
-        console.log('crecimientos');
-        console.log(this.data_crecimientos);
-
-        let year = this.data_crecimientos.index.length - 1;
+    this.blockCrecimiento.start();
+    try {
 
 
-        for (let index = 0; index < this.data_crecimientos.index.length; index++) {
-          const year = this.data_crecimientos.index[index];
-          this.data_crecimientos.data[index].unshift(year);
+      if (country && country != 'Top 10') {
+        return this.appService.getCrecimiento(country).subscribe((data: {}) => {
+          this.data_crecimientos = data;
 
-        }
+          console.log('crecimientos');
+          console.log(this.data_crecimientos);
 
-
-
-        this.data_crecimientos.columns.unshift('Año');
-
-        this.getTotalesCrecimiento(year);
+          let year = this.data_crecimientos.index.length - 1;
 
 
-       
+          for (let index = 0; index < this.data_crecimientos.index.length; index++) {
+            const year = this.data_crecimientos.index[index];
+            this.data_crecimientos.data[index].unshift(year);
 
-      })
-    } else
-      return this.appService.getCrecimientos().subscribe((data: {}) => {
-        this.data_crecimientos = data;
-
-        console.log('crecimientos');
-        console.log(this.data_crecimientos);
-
-        let year = this.data_crecimientos.index.length - 1;
-
-
-        for (let index = 0; index < this.data_crecimientos.index.length; index++) {
-          const year = this.data_crecimientos.index[index];
-          this.data_crecimientos.data[index].unshift(year);
-
-        }
+          }
 
 
 
-        this.data_crecimientos.columns.unshift('Año');
+          this.data_crecimientos.columns.unshift('Año');
 
-        this.getTotalesCrecimiento(year);
+          this.getTotalesCrecimiento(year);
+          this.blockCrecimiento.stop()
 
-      })
+        },err => {
+          console.log('HTTP Error', err) 
+          this.blockCrecimiento.stop();
+          this.openSnackBar('Problemas con el servidor', 'OK');
+        })
+      } else
+        return this.appService.getCrecimientos().subscribe((data: {}) => {
+          this.data_crecimientos = data;
+
+          console.log('crecimientos');
+          console.log(this.data_crecimientos);
+
+          let year = this.data_crecimientos.index.length - 1;
+
+
+          for (let index = 0; index < this.data_crecimientos.index.length; index++) {
+            const year = this.data_crecimientos.index[index];
+            this.data_crecimientos.data[index].unshift(year);
+
+          }
+
+
+
+          this.data_crecimientos.columns.unshift('Año');
+
+          this.getTotalesCrecimiento(year);
+          this.blockCrecimiento.stop()
+
+        },err => {
+          console.log('HTTP Error', err) 
+          this.blockCrecimiento.stop();
+          this.openSnackBar('Problemas con el servidor', 'OK');
+        })
+
+        
+
+    } catch (error) {
+      console.log('error servidor')
+      console.log(error)
+      this.blockCrecimiento.stop()
+      this.openSnackBar('Problemas con el servidor', 'OK');
+    }
   }
 
 
@@ -325,6 +353,22 @@ export class AppComponent {
   selectCountry() {
     console.log(this.bankCtrl.value.name);
     this.getCrecimientos(this.bankCtrl.value.name);
+  }
+
+  click() {
+    console.log('clicked')
+    this.blockContent.start('Loading...');
+
+    setTimeout(() => {
+      this.blockContent.stop();
+    }, 3500);
+  }
+
+
+  openSnackBar(message:string, action:string) {
+    this._snackBar.open(message,action, {
+      duration: 5 * 1000,
+    });
   }
 
 }

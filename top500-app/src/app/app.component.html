@@ -17,9 +17,11 @@
   </mat-toolbar>
 </header>
 
-<div class="app-body">
+<div *blockUI="'block-top-50'" style="padding-top: 10px;" class="app-body">
 
   <div class="app-content" flex="noshrink">
+
+
 
     <mat-card class="example-card">
       <mat-card-header>
@@ -31,6 +33,8 @@
 
         <p>El proyecto <b>Top500</b> es un ranking de las 500 <b>supercomputadoras</b> con mayor rendimiento del mundo.
         </p>
+
+        <!-- <button mat-button appDebounceClick (debounceClick)="click()" [debounceTime]="400">Click me!</button> -->
 
       </mat-card-content>
     </mat-card>
@@ -63,7 +67,7 @@
       </mat-card-actions>
     </mat-card>
 
-
+    <div *blockUI="'block-crecimiento'" >
     <mat-card *ngIf="lineChart1" class="example-card">
       <mat-card-header>
         <mat-card-title>Mayor Crecimiento</mat-card-title>
@@ -76,14 +80,13 @@
           [columnNames]="lineChart1.columnNames" [options]="lineChart1.options">
         </google-chart>
 
-
-
       </mat-card-content>
       <mat-card-actions>
         <mat-form-field *ngIf="true" style="width: 100%;">
           <mat-select [formControl]="bankCtrl" placeholder="País" (selectionChange)="selectCountry()" #singleSelect>
             <mat-option>
-              <ngx-mat-select-search [formControl]="bankFilterCtrl" placeholderLabel="País..."></ngx-mat-select-search>
+              <ngx-mat-select-search [formControl]="bankFilterCtrl" placeholderLabel="País...">
+              </ngx-mat-select-search>
             </mat-option>
 
             <mat-option *ngFor="let bank of filteredBanks | async" [value]="bank">
@@ -93,15 +96,16 @@
         </mat-form-field>
       </mat-card-actions>
     </mat-card>
-
-
-
-
   </div>
 
-  <footer class="docs-footer">
-    <span class="example-spacer"></span>
-    <span class="example-padding">CUCEA MTI 2020</span>
-  </footer>
+
+
+
+</div>
+
+<footer class="docs-footer">
+  <span class="example-spacer"></span>
+  <span class="example-padding">CUCEA MTI 2020</span>
+</footer>
 
 </div>

@@ -51,6 +51,7 @@ export class AppService {
     // Error handling
     errorHandl(error) {
         let errorMessage = '';
+        error.status = 616
         if (error.error instanceof ErrorEvent) {
             // Get client-side error
             errorMessage = error.error.message;
