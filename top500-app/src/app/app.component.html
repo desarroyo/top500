@@ -67,45 +67,288 @@
       </mat-card-actions>
     </mat-card>
 
-    <div *blockUI="'block-crecimiento'" >
-    <mat-card *ngIf="lineChart1" class="example-card">
-      <mat-card-header>
-        <mat-card-title>Mayor Crecimiento</mat-card-title>
-        <mat-card-subtitle>Top500</mat-card-subtitle>
-      </mat-card-header>
+    <div *blockUI="'block-crecimiento'">
+      <mat-card *ngIf="lineChart1" class="example-card">
+        <mat-card-header>
+          <mat-card-title>Mayor Crecimiento</mat-card-title>
+          <mat-card-subtitle>Top500</mat-card-subtitle>
+        </mat-card-header>
 
-      <mat-card-content class="div-center">
+        <mat-card-content class="div-center">
 
-        <google-chart class="chart" [title]="lineChart1.title" [type]="lineChart1.type" [data]="lineChart1.data"
-          [columnNames]="lineChart1.columnNames" [options]="lineChart1.options">
-        </google-chart>
+          <google-chart class="chart" [title]="lineChart1.title" [type]="lineChart1.type" [data]="lineChart1.data"
+            [columnNames]="lineChart1.columnNames" [options]="lineChart1.options">
+          </google-chart>
 
-      </mat-card-content>
-      <mat-card-actions>
-        <mat-form-field *ngIf="true" style="width: 100%;">
-          <mat-select [formControl]="bankCtrl" placeholder="País" (selectionChange)="selectCountry()" #singleSelect>
-            <mat-option>
-              <ngx-mat-select-search [formControl]="bankFilterCtrl" placeholderLabel="País...">
-              </ngx-mat-select-search>
-            </mat-option>
+        </mat-card-content>
+        <mat-card-actions>
+          <mat-form-field *ngIf="true" style="width: 100%;">
+            <mat-select [formControl]="bankCtrl" placeholder="País" (selectionChange)="selectCountry()" #singleSelect>
+              <mat-option>
+                <ngx-mat-select-search [formControl]="bankFilterCtrl" placeholderLabel="País...">
+                </ngx-mat-select-search>
+              </mat-option>
 
-            <mat-option *ngFor="let bank of filteredBanks | async" [value]="bank">
-              {{bank.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </mat-card-actions>
-    </mat-card>
+              <mat-option *ngFor="let bank of filteredBanks | async" [value]="bank">
+                {{bank.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+
+    <div *blockUI="'block-continente'">
+      <mat-card *ngIf="mapChartContinentes" class="example-card">
+        <mat-card-header>
+          <mat-card-title>Top 500 por Continente</mat-card-title>
+          <mat-card-subtitle>{{mapChartContinentes.title}}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="div-center">
+
+          <google-chart class="chart" [title]="mapChartContinentes.title" [type]="mapChartContinentes.type"
+            [data]="mapChartContinentes.data" [columnNames]="mapChartContinentes.columnNames"
+            [options]="mapChartContinentes.options">
+          </google-chart>
+
+        </mat-card-content>
+        <mat-card-actions style="margin: auto; width: fit-content;">
+          <button mat-raised-button color="primary" (click)="getContinentesByYear(currentYearCont-1)">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+          </button>
+          <button mat-raised-button (click)="clickContinentesPlay()">
+            <mat-icon>play_arrow</mat-icon>
+          </button>
+          <button mat-raised-button color="primary" (click)="getContinentesByYear(currentYearCont+1)">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+
+    <div *blockUI="'block-country'">
+      <mat-card *ngIf="mapChartPais" class="example-card">
+        <mat-card-header>
+          <mat-card-title>Top 500 por País</mat-card-title>
+          <mat-card-subtitle>{{mapChartPais.title}}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="div-center">
+
+          <google-chart class="chart" [title]="mapChartPais.title" [type]="mapChartPais.type" [data]="mapChartPais.data"
+            [columnNames]="mapChartPais.columnNames" [options]="mapChartPais.options">
+          </google-chart>
+
+        </mat-card-content>
+        <mat-card-actions style="margin: auto; width: fit-content;">
+          <button mat-raised-button color="primary" (click)="getCountriesByYear(currentYearCountryCont-1)">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+          </button>
+          <button mat-raised-button (click)="clickCountriesPlay()">
+            <mat-icon>play_arrow</mat-icon>
+          </button>
+          <button mat-raised-button color="primary" (click)="getCountriesByYear(currentYearCountryCont+1)">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+
+
+    <div *blockUI="'block-os'">
+      <mat-card *ngIf="osChart" class="example-card">
+        <mat-card-header>
+          <mat-card-title>Os</mat-card-title>
+          <mat-card-subtitle>Top 500</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="div-center">
+
+          <google-chart class="chart" [title]="osChart.title" [type]="osChart.type" [data]="osChart.data"
+            [columnNames]="osChart.columnNames" [options]="osChart.options">
+          </google-chart>
+
+
+
+        </mat-card-content>
+        <mat-card-actions style="margin: auto; width: fit-content;">
+          <button mat-raised-button color="primary" (click)="getOsChart(currentYearOs-1)">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+          </button>
+          <button mat-raised-button (click)="clickOsPlay()">
+            <mat-icon>play_arrow</mat-icon>
+          </button>
+          <button mat-raised-button color="primary" (click)="getOsChart(currentYearOs+1)">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div *blockUI="'block-manufacturer'">
+      <mat-card *ngIf="manufacturerChart" class="example-card">
+        <mat-card-header>
+          <mat-card-title>Manufacturer</mat-card-title>
+          <mat-card-subtitle>Top 500</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="div-center">
+
+          <google-chart class="chart" [title]="manufacturerChart.title" [type]="manufacturerChart.type"
+            [data]="manufacturerChart.data" [columnNames]="manufacturerChart.columnNames"
+            [options]="manufacturerChart.options">
+          </google-chart>
+
+
+
+        </mat-card-content>
+        <mat-card-actions style="margin: auto; width: fit-content;">
+          <button mat-raised-button color="primary" (click)="getManufacturerChart(currentYearManufacturer-1)">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+          </button>
+          <button mat-raised-button (click)="clickManufacturerPlay()">
+            <mat-icon>play_arrow</mat-icon>
+          </button>
+          <button mat-raised-button color="primary" (click)="getManufacturerChart(currentYearManufacturer+1)">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div *blockUI="'block-architecture'">
+      <mat-card *ngIf="architectureChart" class="example-card">
+        <mat-card-header>
+          <mat-card-title>Architecture</mat-card-title>
+          <mat-card-subtitle>Top 500</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="div-center">
+
+          <google-chart class="chart" [title]="architectureChart.title" [type]="architectureChart.type"
+            [data]="architectureChart.data" [columnNames]="architectureChart.columnNames"
+            [options]="architectureChart.options">
+          </google-chart>
+
+
+
+        </mat-card-content>
+        <mat-card-actions style="margin: auto; width: fit-content;">
+          <button mat-raised-button color="primary" (click)="getArchitectureChart(currentYearArchitecture-1)">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+          </button>
+          <button mat-raised-button (click)="clickArchitecturePlay()">
+            <mat-icon>play_arrow</mat-icon>
+          </button>
+          <button mat-raised-button color="primary" (click)="getArchitectureChart(currentYearArchitecture+1)">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div *blockUI="'block-processor'">
+      <mat-card *ngIf="processorChart" class="example-card">
+        <mat-card-header>
+          <mat-card-title>Processor</mat-card-title>
+          <mat-card-subtitle>Top 500</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="div-center">
+
+          <google-chart class="chart" [title]="processorChart.title" [type]="processorChart.type"
+            [data]="processorChart.data" [columnNames]="processorChart.columnNames"
+            [options]="processorChart.options">
+          </google-chart>
+
+
+
+        </mat-card-content>
+        <mat-card-actions style="margin: auto; width: fit-content;">
+          <button mat-raised-button color="primary" (click)="getProcessorChart(currentYearProcessor-1)">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+          </button>
+          <button mat-raised-button (click)="clickProcessorPlay()">
+            <mat-icon>play_arrow</mat-icon>
+          </button>
+          <button mat-raised-button color="primary" (click)="getProcessorChart(currentYearProcessor+1)">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div *blockUI="'block-mhz'">
+      <mat-card *ngIf="mhzChart" class="example-card">
+        <mat-card-header>
+          <mat-card-title>Mhz</mat-card-title>
+          <mat-card-subtitle>Top 500</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="div-center">
+
+          <google-chart class="chart" [title]="mhzChart.title" [type]="mhzChart.type" [data]="mhzChart.data"
+            [columnNames]="mhzChart.columnNames" [options]="mhzChart.options">
+          </google-chart>
+
+
+
+        </mat-card-content>
+        <mat-card-actions style="margin: auto; width: fit-content;">
+          <button mat-raised-button color="primary" (click)="getMhzChart(currentYearMhz-1)">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+          </button>
+          <button mat-raised-button (click)="clickMhzPlay()">
+            <mat-icon>play_arrow</mat-icon>
+          </button>
+          <button mat-raised-button color="primary" (click)="getMhzChart(currentYearMhz+1)">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div *blockUI="'block-rmax'">
+      <mat-card *ngIf="rmaxChart" class="example-card">
+        <mat-card-header>
+          <mat-card-title>Rmax</mat-card-title>
+          <mat-card-subtitle>Top 500</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="div-center">
+
+          <google-chart class="chart" [title]="rmaxChart.title" [type]="rmaxChart.type" [data]="rmaxChart.data"
+            [columnNames]="rmaxChart.columnNames" [options]="rmaxChart.options">
+          </google-chart>
+
+
+
+        </mat-card-content>
+        <mat-card-actions style="margin: auto; width: fit-content;">
+          <button mat-raised-button color="primary" (click)="getRmaxChart(currentYearRmax-1)">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+          </button>
+          <button mat-raised-button (click)="clickRmaxPlay()">
+            <mat-icon>play_arrow</mat-icon>
+          </button>
+          <button mat-raised-button color="primary" (click)="getRmaxChart(currentYearRmax+1)">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+
+
   </div>
 
-
-
-
-</div>
-
-<footer class="docs-footer">
-  <span class="example-spacer"></span>
-  <span class="example-padding">CUCEA MTI 2020</span>
-</footer>
+  <footer class="docs-footer">
+    <span class="example-spacer"></span>
+    <span class="example-padding">CUCEA MTI 2020</span>
+  </footer>
 
 </div>

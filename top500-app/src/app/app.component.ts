@@ -7,7 +7,7 @@ import { ReplaySubject, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { BANKS, Bank } from './demo-data';
 import { MatSelect } from '@angular/material/select';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
@@ -23,6 +23,15 @@ export class AppComponent {
 
   @BlockUI('block-top-50') blockContent: NgBlockUI;
   @BlockUI('block-crecimiento') blockCrecimiento: NgBlockUI;
+  @BlockUI('block-continente') blockContinente: NgBlockUI;
+  @BlockUI('block-country') blockCountries: NgBlockUI;
+
+  @BlockUI('block-os') blockOs: NgBlockUI;
+  @BlockUI('block-manufacturer') blockManufacturer: NgBlockUI;
+  @BlockUI('block-architecture') blockArchitecture: NgBlockUI;
+  @BlockUI('block-processor') blockProcessor: NgBlockUI;
+  @BlockUI('block-mhz') blockMhz: NgBlockUI;
+  @BlockUI('block-rmax') blockRmax: NgBlockUI;
 
 
   /** list of banks */
@@ -46,13 +55,47 @@ export class AppComponent {
 
   chart1;
   lineChart1;
+  mapChartPais;
+  mapChartContinentes;
+
+  osChart;
+  data_os;
+  currentYearOs: number;
+
+  manufacturerChart;
+  data_manufacturer;
+  currentYearManufacturer: number;
+
+  architectureChart;
+  data_architecture;
+  currentYearArchitecture: number;
+
+  processorChart;
+  data_processor;
+  currentYearProcessor: number;
+
+  mhzChart;
+  data_mhz;
+  currentYearMhz: number;
+
+  rmaxChart;
+  data_rmax;
+  currentYearRmax: number;
+
 
   innerWidth: number;
 
   customersObservable: Observable<any>;
   data_totales;
   data_crecimientos;
+  data_continentes;
+  data_countries;
+
   currentYear: number;
+  currentYearCont: number;
+  currentYearCountryCont: number;
+
+
 
 
   constructor(public appService: AppService, private _snackBar: MatSnackBar) { }
@@ -64,13 +107,409 @@ export class AppComponent {
   }
 
 
+  
+getOs() {
+  return this.appService.getOs().subscribe((data: {}) => {
+    this.data_os = data;
+    this.data_os = this.data_os.data;
+
+
+    let currentYearOs = this.data_os.length - 1;
+    this.getOsChart(currentYearOs)
+
+
+  })
+}
+
+getOsChart(year: number) {
+
+  if (year < 0 || year > this.data_os.length - 1) {
+    return;
+  }
+
+  this.currentYearOs = year;
+
+  let chart_data = this.data_os[year].data
+
+
+  this.osChart = {
+    title: this.data_os[year].year,
+    subtitle: "ok",
+    type: "BarChart",
+    data: chart_data,
+    columnNames: ['Os', 'Total'],
+    options: {
+      titleTextStyle: {
+        fontSize: 30,
+        bold: true
+      },
+      is3D: true,
+      animation: {
+        duration: 300,
+        easing: 'out',
+        startup: true
+      },
+    }
+  }
+
+}
+
+
+
+clickOsPlay() {
+  (async () => {
+
+
+    for (let y = 0; y < this.data_os.length; y++) {
+      this.getOsChart(y);
+
+
+      await this.delay(1000);
+      // Do something after
+
+
+    }
+
+  })();
+
+}
+
+getManufacturer() {
+  return this.appService.getManufacturer().subscribe((data: {}) => {
+    this.data_manufacturer = data;
+    this.data_manufacturer = this.data_manufacturer.data;
+
+
+    let currentYearManufacturer = this.data_manufacturer.length - 1;
+    this.getManufacturerChart(currentYearManufacturer)
+
+
+  })
+}
+
+getManufacturerChart(year: number) {
+
+  if (year < 0 || year > this.data_manufacturer.length - 1) {
+    return;
+  }
+
+  this.currentYearManufacturer = year;
+
+  let chart_data = this.data_manufacturer[year].data
+
+
+  this.manufacturerChart = {
+    title: this.data_manufacturer[year].year,
+    subtitle: "ok",
+    type: "BarChart",
+    data: chart_data,
+    columnNames: ['Manufacturer', 'Total'],
+    options: {
+      titleTextStyle: {
+        fontSize: 30,
+        bold: true
+      },
+      is3D: true,
+      animation: {
+        duration: 300,
+        easing: 'out',
+        startup: true
+      },
+    }
+  }
+
+}
+
+
+
+clickManufacturerPlay() {
+  (async () => {
+
+
+    for (let y = 0; y < this.data_manufacturer.length; y++) {
+      this.getManufacturerChart(y);
+
+
+      await this.delay(1000);
+      // Do something after
+
+
+    }
+
+  })();
+
+}
+
+getArchitecture() {
+  return this.appService.getArchitecture().subscribe((data: {}) => {
+    this.data_architecture = data;
+    this.data_architecture = this.data_architecture.data;
+
+
+    let currentYearArchitecture = this.data_architecture.length - 1;
+    this.getArchitectureChart(currentYearArchitecture)
+
+
+  })
+}
+
+getArchitectureChart(year: number) {
+
+  if (year < 0 || year > this.data_architecture.length - 1) {
+    return;
+  }
+
+  this.currentYearArchitecture = year;
+
+  let chart_data = this.data_architecture[year].data
+
+
+  this.architectureChart = {
+    title: this.data_architecture[year].year,
+    subtitle: "ok",
+    type: "BarChart",
+    data: chart_data,
+    columnNames: ['Architecture', 'Total'],
+    options: {
+      titleTextStyle: {
+        fontSize: 30,
+        bold: true
+      },
+      is3D: true,
+      animation: {
+        duration: 300,
+        easing: 'out',
+        startup: true
+      },
+    }
+  }
+
+}
+
+
+
+clickArchitecturePlay() {
+  (async () => {
+
+
+    for (let y = 0; y < this.data_architecture.length; y++) {
+      this.getArchitectureChart(y);
+
+
+      await this.delay(1000);
+      // Do something after
+
+
+    }
+
+  })();
+
+}
+
+getProcessor() {
+  return this.appService.getProcessor().subscribe((data: {}) => {
+    this.data_processor = data;
+    this.data_processor = this.data_processor.data;
+
+
+    let currentYearProcessor = this.data_processor.length - 1;
+    this.getProcessorChart(currentYearProcessor)
+
+
+  })
+}
+
+getProcessorChart(year: number) {
+
+  if (year < 0 || year > this.data_processor.length - 1) {
+    return;
+  }
+
+  this.currentYearProcessor = year;
+
+  let chart_data = this.data_processor[year].data
+
+
+  this.processorChart = {
+    title: this.data_processor[year].year,
+    subtitle: "ok",
+    type: "BarChart",
+    data: chart_data,
+    columnNames: ['Processor', 'Total'],
+    options: {
+      titleTextStyle: {
+        fontSize: 30,
+        bold: true
+      },
+      is3D: true,
+      animation: {
+        duration: 300,
+        easing: 'out',
+        startup: true
+      },
+    }
+  }
+
+}
+
+
+
+clickProcessorPlay() {
+  (async () => {
+
+
+    for (let y = 0; y < this.data_processor.length; y++) {
+      this.getProcessorChart(y);
+
+
+      await this.delay(1000);
+      // Do something after
+
+
+    }
+
+  })();
+
+}
+
+getMhz() {
+  return this.appService.getMhz().subscribe((data: {}) => {
+    this.data_mhz = data;
+    this.data_mhz = this.data_mhz.data;
+
+
+    let currentYearMhz = this.data_mhz.length - 1;
+    this.getMhzChart(currentYearMhz)
+
+
+  })
+}
+
+getMhzChart(year: number) {
+
+  if (year < 0 || year > this.data_mhz.length - 1) {
+    return;
+  }
+
+  this.currentYearMhz = year;
+
+  let chart_data = this.data_mhz[year].data
+
+
+  this.mhzChart = {
+    title: this.data_mhz[year].year,
+    subtitle: "ok",
+    type: "BarChart",
+    data: chart_data,
+    columnNames: ['Mhz', 'Total'],
+    options: {
+      titleTextStyle: {
+        fontSize: 30,
+        bold: true
+      },
+      is3D: true,
+      animation: {
+        duration: 300,
+        easing: 'out',
+        startup: true
+      },
+    }
+  }
+
+}
+
+
+
+clickMhzPlay() {
+  (async () => {
+
+
+    for (let y = 0; y < this.data_mhz.length; y++) {
+      this.getMhzChart(y);
+
+
+      await this.delay(1000);
+      // Do something after
+
+
+    }
+
+  })();
+
+}
+
+getRmax() {
+  return this.appService.getRmax().subscribe((data: {}) => {
+    this.data_rmax = data;
+    this.data_rmax = this.data_rmax.data;
+
+
+    let currentYearRmax = this.data_rmax.length - 1;
+    this.getRmaxChart(currentYearRmax)
+
+
+  })
+}
+
+getRmaxChart(year: number) {
+
+  if (year < 0 || year > this.data_rmax.length - 1) {
+    return;
+  }
+
+  this.currentYearRmax = year;
+
+  let chart_data = this.data_rmax[year].data
+
+
+  this.rmaxChart = {
+    title: this.data_rmax[year].year,
+    subtitle: "ok",
+    type: "BarChart",
+    data: chart_data,
+    columnNames: ['Rmax', 'Total'],
+    options: {
+      titleTextStyle: {
+        fontSize: 30,
+        bold: true
+      },
+      is3D: true,
+      animation: {
+        duration: 300,
+        easing: 'out',
+        startup: true
+      },
+    }
+  }
+
+}
+
+
+
+clickRmaxPlay() {
+  (async () => {
+
+
+    for (let y = 0; y < this.data_rmax.length; y++) {
+      this.getRmaxChart(y);
+
+
+      await this.delay(1000);
+      // Do something after
+
+
+    }
+
+  })();
+
+}
+
+
   // Get Data
   getTotales() {
     return this.appService.getTotales().subscribe((data: {}) => {
       this.data_totales = data;
 
-      console.log('totales');
-      console.log(this.data_totales);
 
       let year = this.data_totales.index.length - 1;
       this.getTotalesChart(year)
@@ -80,7 +519,6 @@ export class AppComponent {
         paises.push({ id: c, name: c == 0 ? 'Top 10' : this.data_totales.columns[c] });
       }
 
-      console.log(paises);
       this.banks = paises;
       this.initPaisesCombo(this.banks)
 
@@ -97,7 +535,6 @@ export class AppComponent {
     }
 
     this.currentYear = year;
-    console.log(this.currentYear)
 
     //this.title_pie = this.data_totales.index[year];
 
@@ -126,7 +563,7 @@ export class AppComponent {
     this.chart1 = {
       title: this.data_totales.index[year],
       subtitle: "ok",
-      type: "PieChart",
+      type: "BarChart",
       data: sorrtedArray,
       columnNames: ['País', 'Total'],
       options: {
@@ -164,6 +601,100 @@ export class AppComponent {
 
   }
 
+  clickContinentesPlay() {
+    (async () => {
+
+
+      for (let y = 0; y < this.data_continentes.length; y++) {
+        this.getContinentesByYear(y);
+
+
+        await this.delay(1000);
+        // Do something after
+
+
+      }
+
+    })();
+
+  }
+
+  clickCountriesPlay() {
+    (async () => {
+
+
+      for (let y = 0; y < this.data_countries.length; y++) {
+        this.getCountriesByYear(y);
+
+
+        await this.delay(1000);
+        // Do something after
+
+
+      }
+
+    })();
+
+  }
+
+  getContinentes() {
+
+
+    this.blockContinente.start();
+    try {
+
+
+      return this.appService.getContinentes().subscribe((data: {}) => {
+        this.data_continentes = data;
+        this.data_continentes = this.data_continentes.data;
+
+
+        this.currentYearCont = this.data_continentes.length - 1
+        this.getContinentesByYear(this.currentYearCont);
+        this.blockContinente.stop()
+
+      }, err => {
+        this.blockContinente.stop();
+        this.openSnackBar('Problemas con el servidor', 'OK');
+      })
+
+
+
+    } catch (error) {
+      this.blockContinente.stop()
+      this.openSnackBar('Problemas con el servidor', 'OK');
+    }
+  }
+
+  getCountries() {
+
+
+    this.blockCountries.start();
+    try {
+
+
+      return this.appService.getCountries().subscribe((data: {}) => {
+        this.data_countries = data;
+        this.data_countries = this.data_countries.data;
+
+
+        this.currentYearCont = this.data_countries.length - 1
+        this.getCountriesByYear(this.currentYearCont);
+        this.blockCountries.stop()
+
+      }, err => {
+        this.blockCountries.stop();
+        this.openSnackBar('Problemas con el servidor', 'OK');
+      })
+
+
+
+    } catch (error) {
+      this.blockCountries.stop()
+      this.openSnackBar('Problemas con el servidor', 'OK');
+    }
+  }
+
 
   getCrecimientos(country: String) {
 
@@ -176,8 +707,6 @@ export class AppComponent {
         return this.appService.getCrecimiento(country).subscribe((data: {}) => {
           this.data_crecimientos = data;
 
-          console.log('crecimientos');
-          console.log(this.data_crecimientos);
 
           let year = this.data_crecimientos.index.length - 1;
 
@@ -195,8 +724,7 @@ export class AppComponent {
           this.getTotalesCrecimiento(year);
           this.blockCrecimiento.stop()
 
-        },err => {
-          console.log('HTTP Error', err) 
+        }, err => {
           this.blockCrecimiento.stop();
           this.openSnackBar('Problemas con el servidor', 'OK');
         })
@@ -204,8 +732,6 @@ export class AppComponent {
         return this.appService.getCrecimientos().subscribe((data: {}) => {
           this.data_crecimientos = data;
 
-          console.log('crecimientos');
-          console.log(this.data_crecimientos);
 
           let year = this.data_crecimientos.index.length - 1;
 
@@ -223,17 +749,14 @@ export class AppComponent {
           this.getTotalesCrecimiento(year);
           this.blockCrecimiento.stop()
 
-        },err => {
-          console.log('HTTP Error', err) 
+        }, err => {
           this.blockCrecimiento.stop();
           this.openSnackBar('Problemas con el servidor', 'OK');
         })
 
-        
+
 
     } catch (error) {
-      console.log('error servidor')
-      console.log(error)
       this.blockCrecimiento.stop()
       this.openSnackBar('Problemas con el servidor', 'OK');
     }
@@ -243,7 +766,6 @@ export class AppComponent {
   getTotalesCrecimiento(year: number) {
 
     this.currentYear = year;
-    console.log(this.currentYear)
     this.lineChart1 = {
       title: "Top500",
       type: "Line",
@@ -266,6 +788,76 @@ export class AppComponent {
 
   }
 
+  getContinentesByYear(pos: number) {
+
+    try {
+
+
+      this.currentYearCont = pos;
+
+      this.mapChartContinentes = {
+        title: this.data_continentes[pos].year,
+        type: "GeoChart",
+        columnNames: [
+          [{ type: 'string', role: 'data' }],
+          [{ type: 'string', role: 'data' }],
+          [{ type: 'number', role: 'data' }]
+        ],
+        data: this.data_continentes[pos].data,
+        options: {
+          resolution: 'continents',
+          backgroundColor: '#ffffff',
+          datalessRegionColor: '#ffffff',
+          legend: 'none',
+          tooltip: {
+            isHtml: true,
+            textStyle: {
+              color: 'black'
+            }
+          }
+        }
+      }
+
+    } catch (error) {
+      this.currentYearCont = 0;
+    }
+
+  }
+
+  getCountriesByYear(pos: number) {
+
+    try {
+
+
+      this.currentYearCountryCont = pos;
+
+      this.mapChartPais = {
+        title: this.data_countries[pos].year,
+        type: "GeoChart",
+        columnNames: [
+          [{ type: 'string', role: 'data' }],
+          [{ type: 'number', role: 'data' }]
+        ],
+        data: this.data_countries[pos].data,
+        options: {
+          backgroundColor: '#ffffff',
+          datalessRegionColor: '#ffffff',
+          legend: 'none',
+          tooltip: {
+            isHtml: true,
+            textStyle: {
+              color: 'black'
+            }
+          }
+        }
+      }
+
+    } catch (error) {
+      this.currentYearCountryCont = 0;
+    }
+
+  }
+
   ngOnInit() {
     this.innerWidth = window.innerWidth;
 
@@ -273,14 +865,20 @@ export class AppComponent {
 
     this.getTotales();
     this.getCrecimientos(null);
+    this.getContinentes();
+    this.getCountries();
+    this.getOs();
+    this.getManufacturer();
+    this.getArchitecture();
+    this.getProcessor();
+    this.getMhz();
+    this.getRmax();
 
 
 
   }
   initPaisesCombo(array: any) {
 
-    console.log('array');
-    console.log(array);
     // set initial selection
     this.bankCtrl.setValue(array[0]);
 
@@ -351,12 +949,10 @@ export class AppComponent {
   }
 
   selectCountry() {
-    console.log(this.bankCtrl.value.name);
     this.getCrecimientos(this.bankCtrl.value.name);
   }
 
   click() {
-    console.log('clicked')
     this.blockContent.start('Loading...');
 
     setTimeout(() => {
@@ -365,8 +961,8 @@ export class AppComponent {
   }
 
 
-  openSnackBar(message:string, action:string) {
-    this._snackBar.open(message,action, {
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
       duration: 5 * 1000,
     });
   }
